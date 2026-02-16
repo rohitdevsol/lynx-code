@@ -1,5 +1,5 @@
 {
-  "name": "LynxCode",
+  "name": "lynx-code",
   "private": true,
   "scripts": {
     "build": "turbo run build",
