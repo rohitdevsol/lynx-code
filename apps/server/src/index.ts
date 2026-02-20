@@ -1,6 +1,6 @@
 import Elysia from "elysia";
 import { cors } from "@elysiajs/cors";
-import { betterAuthPlugin } from "./middlewares/auth.middleware";
+import { betterAuthPlugin } from "./middlewares/auth";
 
 const app = new Elysia()
   .use(
