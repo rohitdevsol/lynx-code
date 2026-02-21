@@ -21,4 +21,18 @@ export abstract class ProjectService {
 
     return projects;
   }
+
+  static async getProject(
+    userId: string,
+    { slug }: ProjectModel["getProjectSlugParam"],
+  ) {
+    const project = await prisma.project.findUniqueOrThrow({
+      where: {
+        slug,
+        userId,
+      },
+    });
+
+    return project;
+  }
 }
