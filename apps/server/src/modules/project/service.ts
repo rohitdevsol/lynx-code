@@ -2,6 +2,7 @@ import { prisma } from "@repo/db";
 import type { ProjectModel } from "./model";
 
 export abstract class ProjectService {
+  // method to get all the projects
   static async getProjects(
     userId: string,
     { page, pageSize }: ProjectModel["getProjectsRequestBody"],
@@ -22,17 +23,49 @@ export abstract class ProjectService {
     return projects;
   }
 
+  // method to get one project
   static async getProject(
     userId: string,
-    { slug }: ProjectModel["getProjectSlugParam"],
+    { name }: ProjectModel["getProjectNameParam"],
   ) {
     const project = await prisma.project.findUniqueOrThrow({
       where: {
-        slug,
+        name,
         userId,
       },
     });
 
     return project;
+  }
+
+  // create project
+  static async createProject(
+    userId: string,
+    body: ProjectModel["createProjectBody"],
+  ) {
+    const project = await prisma.project.create({
+      data: {
+        name: body.name,
+        userId,
+      },
+    });
+
+    return project;
+  }
+
+  static async updateProjectName(
+    userId: string,
+    params: ProjectModel["updateProjectNameParams"],
+    body: ProjectModel["updateProjectName"],
+  ) {
+    await prisma.project.update({
+      where: {
+        id: params.id,
+        userId,
+      },
+      data: {
+        name: body.name,
+      },
+    });
   }
 }
