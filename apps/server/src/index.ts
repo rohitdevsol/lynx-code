@@ -2,6 +2,7 @@ import Elysia from "elysia";
 import { cors } from "@elysiajs/cors";
 import { betterAuthPlugin } from "@/middlewares/auth";
 import { projectsRouter } from "@/modules/project";
+import { openapi, fromTypes } from "@elysiajs/openapi";
 
 const app = new Elysia()
   .use(
@@ -10,6 +11,14 @@ const app = new Elysia()
       methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
       credentials: true,
       allowedHeaders: ["Content-Type", "Authorization"],
+    }),
+  )
+  .use(
+    openapi({
+      references: fromTypes(),
+      documentation: {
+        tags: [{ name: "Project", description: "Project Endpoints" }],
+      },
     }),
   )
   .use(betterAuthPlugin) // mounts /api/auth/*
