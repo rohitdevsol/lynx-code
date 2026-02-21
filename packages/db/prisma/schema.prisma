@@ -23,6 +23,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
+  projects      Project[]
 
 
   @@map("user")
@@ -74,4 +75,20 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+
+model Project{
+  id    String    @id      @default(uuid())
+  slug  String    @unique
+
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  userId    String
+
+  users    User   @relation(fields: [userId],references: [id], onDelete: Cascade)
+
+  @@index([slug])
+  @@map("project")
 }
