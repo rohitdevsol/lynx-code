@@ -2,8 +2,8 @@ import { prisma } from "@repo/db";
 import type { ProjectModel } from "./model";
 
 export abstract class ProjectService {
-  // method to get all the projects
-  static async getProjects(
+  // Service:: to get all the projects
+  static async getAllProjects(
     userId: string,
     { page, pageSize }: ProjectModel["getProjectsRequestBody"],
   ) {
@@ -23,8 +23,8 @@ export abstract class ProjectService {
     return projects;
   }
 
-  // method to get one project
-  static async getProject(
+  // Service:: to get one project
+  static async getProjectByName(
     userId: string,
     { name }: ProjectModel["getProjectNameParam"],
   ) {
@@ -38,7 +38,22 @@ export abstract class ProjectService {
     return project;
   }
 
-  // create project
+  // Service:: to get one project by id
+  static async getProjectById(
+    userId: string,
+    { id }: ProjectModel["getProjectIdParam"],
+  ) {
+    const project = await prisma.project.findUniqueOrThrow({
+      where: {
+        id,
+        userId,
+      },
+    });
+
+    return project;
+  }
+
+  // Service:: to create project
   static async createProject(
     userId: string,
     body: ProjectModel["createProjectBody"],
@@ -53,7 +68,8 @@ export abstract class ProjectService {
     return project;
   }
 
-  static async updateProjectName(
+  // Service:: to update the project via name
+  static async updateProjectByName(
     userId: string,
     params: ProjectModel["updateProjectNameParams"],
     body: ProjectModel["updateProjectName"],
@@ -65,6 +81,19 @@ export abstract class ProjectService {
       },
       data: {
         name: body.name,
+      },
+    });
+  }
+
+  // Service:: to delete a project via project id
+  static async deleteProjectById(
+    userId: string,
+    params: ProjectModel["deleteProjectParams"],
+  ) {
+    await prisma.project.delete({
+      where: {
+        id: params.id,
+        userId,
       },
     });
   }

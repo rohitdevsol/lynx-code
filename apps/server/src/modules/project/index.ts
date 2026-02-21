@@ -1,14 +1,15 @@
 import Elysia from "elysia";
-import { ProjectSchemas, type ProjectModel } from "./model";
+import { ProjectSchemas } from "./model";
 import { betterAuthPlugin } from "@/middlewares/auth";
 import { ProjectService } from "./service";
 
 export const projectsRouter = new Elysia()
   .use(betterAuthPlugin)
+  // Handler:: to get all projects paginated
   .get(
     "/projects",
     async ({ user, body }) => {
-      return await ProjectService.getProjects(user.id, body);
+      return await ProjectService.getAllProjects(user.id, body);
     },
     {
       auth: true,
@@ -18,10 +19,12 @@ export const projectsRouter = new Elysia()
       },
     },
   )
+
+  // Handler:: to get specific project vy project name(unique)
   .get(
     "project/:name",
     async ({ params, user }) => {
-      return await ProjectService.getProject(user.id, params);
+      return await ProjectService.getProjectByName(user.id, params);
     },
     {
       auth: true,
@@ -31,6 +34,23 @@ export const projectsRouter = new Elysia()
       },
     },
   )
+
+  // Handler:: to get the project via id ..optional
+  .get(
+    "project/:id",
+    async ({ params, user }) => {
+      return await ProjectService.getProjectById(user.id, params);
+    },
+    {
+      auth: true,
+      params: ProjectSchemas.getProjectIdParam,
+      detail: {
+        tags: ["Project"],
+      },
+    },
+  )
+
+  // Handler:: to create a project
   .post(
     "/project",
     async ({ user, body }) => {
@@ -44,15 +64,32 @@ export const projectsRouter = new Elysia()
       },
     },
   )
-  .post(
+
+  // Handler:: to update the project name via id
+  .patch(
     "/project/:id",
     async ({ params, user, body }) => {
-      return await ProjectService.updateProjectName(user.id, params, body);
+      return await ProjectService.updateProjectByName(user.id, params, body);
     },
     {
       auth: true,
       params: ProjectSchemas.updateProjectNameParams,
       body: ProjectSchemas.createProjectBody,
+      detail: {
+        tags: ["Project"],
+      },
+    },
+  )
+
+  // Handler:: to delete project by id
+  .delete(
+    "/project/:id",
+    async ({ params, user }) => {
+      return await ProjectService.deleteProjectById(user.id, params);
+    },
+    {
+      auth: true,
+      params: ProjectSchemas.deleteProjectParams,
       detail: {
         tags: ["Project"],
       },
