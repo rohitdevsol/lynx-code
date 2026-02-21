@@ -80,7 +80,7 @@ model Verification {
 
 model Project{
   id    String    @id      @default(uuid())
-  slug  String    @unique
+  name  String    @unique
 
   createdAt   DateTime   @default(now())
   updatedAt   DateTime    @updatedAt
@@ -89,6 +89,6 @@ model Project{
 
   users    User   @relation(fields: [userId],references: [id], onDelete: Cascade)
 
-  @@index([slug])
+  @@index([name])
   @@map("project")
 }
