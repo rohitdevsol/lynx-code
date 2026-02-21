@@ -22,7 +22,7 @@ const PAGINATION_VALIDATION = {
 
 export const ProjectSchemas = {
   // Schema:: get all the projects
-  getProjectsRequestBody: t.Object(PAGINATION_VALIDATION),
+  getProjectsRequestQuery: t.Object(PAGINATION_VALIDATION),
 
   // Schema:: get one project by name
   getProjectNameParam: t.Object(PROJECT_NAME_VALIDATION),

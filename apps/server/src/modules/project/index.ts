@@ -10,11 +10,11 @@ export const projectsRouter = new Elysia()
       // Handler:: to get all projects paginated
       .get(
         "/projects",
-        async ({ user, body }) => {
-          return await ProjectService.getAllProjects(user.id, body);
+        async ({ user, query }) => {
+          return await ProjectService.getAllProjects(user.id, query);
         },
         {
-          body: ProjectSchemas.getProjectsRequestBody,
+          query: ProjectSchemas.getProjectsRequestQuery,
         },
       )
 

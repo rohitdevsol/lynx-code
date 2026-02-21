@@ -5,7 +5,7 @@ export abstract class ProjectService {
   // Service:: to get all the projects
   static async getAllProjects(
     userId: string,
-    { page, pageSize }: ProjectModel["getProjectsRequestBody"],
+    { page, pageSize }: ProjectModel["getProjectsRequestQuery"],
   ) {
     const skip = (page - 1) * pageSize;
 
