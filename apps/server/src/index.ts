@@ -3,6 +3,7 @@ import { cors } from "@elysiajs/cors";
 import { betterAuthPlugin } from "@/middlewares/auth";
 import { projectsRouter } from "@/modules/project";
 import { openapi, fromTypes } from "@elysiajs/openapi";
+import { BetterAuthOpenAPI } from "./utils/auth";
 
 const app = new Elysia()
   .use(
@@ -17,15 +18,38 @@ const app = new Elysia()
     openapi({
       references: fromTypes(),
       documentation: {
-        tags: [{ name: "Project", description: "Project Endpoints" }],
+        info: {
+          title: "Lynx Code",
+          version: "1.0.0",
+          description: "Backend APIs for Lynx Code",
+        },
+        components: {
+          ...(await BetterAuthOpenAPI.getComponents()),
+          securitySchemes: {
+            cookieAuth: {
+              type: "apiKey",
+              in: "cookie",
+              name: "better-auth.session_token",
+              description:
+                "Login via POST /api/auth/sign-in/email first, the cookie is set automatically",
+            },
+          },
+        },
+        paths: await BetterAuthOpenAPI.getPaths("/api/auth"),
+        tags: [
+          {
+            name: "Auth",
+            description: "Authentication endpoints (Better Auth)",
+          },
+          { name: "Project", description: "Project endpoints" },
+        ],
+        security: [{ cookieAuth: [] }],
       },
     }),
   )
-  .use(betterAuthPlugin) // mounts /api/auth/*
+  .use(betterAuthPlugin)
   .use(projectsRouter)
   .get("/health", () => ({ status: "ok" }))
   .listen(4000);
-
-console.log(`🦊 Elysia running at http://localhost:${app.server?.port}`);
 
 export type App = typeof app;
