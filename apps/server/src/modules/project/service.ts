@@ -38,21 +38,6 @@ export abstract class ProjectService {
     return project;
   }
 
-  // Service:: to get one project by id
-  static async getProjectById(
-    userId: string,
-    { id }: ProjectModel["getProjectIdParam"],
-  ) {
-    const project = await prisma.project.findUniqueOrThrow({
-      where: {
-        id,
-        userId,
-      },
-    });
-
-    return project;
-  }
-
   // Service:: to create project
   static async createProject(
     userId: string,
