@@ -2,13 +2,24 @@
   "name": "lynx-code",
   "private": true,
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
+    "dev": "dotenv -- turbo run dev",
+    "build": "dotenv -- turbo run build",
     "lint": "turbo run lint",
+    "db:migrate:deploy": "dotenv -- turbo run db:migrate:deploy",
+    "db:migrate:dev": "dotenv -- turbo run db:migrate:dev",
+    "db:push": "dotenv -- turbo run db:push",
+    "db:seed": "dotenv -- turbo run db:seed",
+    "db:generate": "dotenv -- turbo run generate",
+    "db:migrate:reset": "dotenv -- turbo run db:migrate:reset",
+    "db:studio": "dotenv -- turbo run db:studio",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "check-types": "turbo run check-types",
+    "server:dev": "dotenv -- turbo run server:dev",
+    "server:build": "dotenv --turbo run server:build",
+    "server:typecheck": "dotenv -- turbo run server:typecheck"
   },
   "devDependencies": {
+    "dotenv-cli": "^11.0.0",
     "prettier": "^3.7.4",
     "turbo": "^2.8.9",
     "typescript": "5.9.2"
