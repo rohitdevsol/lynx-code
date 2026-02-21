@@ -1,6 +1,7 @@
 import Elysia from "elysia";
 import { cors } from "@elysiajs/cors";
-import { betterAuthPlugin } from "./middlewares/auth";
+import { betterAuthPlugin } from "@/middlewares/auth";
+import { projectsRouter } from "@/modules/project";
 
 const app = new Elysia()
   .use(
@@ -12,7 +13,7 @@ const app = new Elysia()
     }),
   )
   .use(betterAuthPlugin) // mounts /api/auth/*
-  //   .use(projectsRouter) // mounts /projects/*
+  .use(projectsRouter)
   .get("/health", () => ({ status: "ok" }))
   .listen(4000);
 
