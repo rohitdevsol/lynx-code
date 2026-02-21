@@ -1,3 +1,4 @@
+import "dotenv/config";
 import Elysia from "elysia";
 import { cors } from "@elysiajs/cors";
 import { betterAuthPlugin } from "@/middlewares/auth";
@@ -8,7 +9,7 @@ import { BetterAuthOpenAPI } from "./utils/auth";
 const app = new Elysia()
   .use(
     cors({
-      origin: process.env.WEB_URL!,
+      origin: process.env.NEXT_PUBLIC_BETTER_AUTH_URL!,
       methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
       credentials: true,
       allowedHeaders: ["Content-Type", "Authorization"],

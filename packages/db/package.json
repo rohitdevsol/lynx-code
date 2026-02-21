@@ -7,9 +7,16 @@
     ".": "./index.ts"
   },
   "scripts": {
-    "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:migrate:dev": "prisma migrate dev ",
     "db:push": "prisma db push",
+    "db:migrate:reset": "prisma migrate reset --force",
+    "db:seed": "tsx src/seed.ts",
+    "format": "prisma format",
+    "db:generate": "prisma generate",
+    "lint": "eslint . --max-warnings 0",
+    "prebuild": "npm run generate",
+    "predev": "npm run generate",
     "db:studio": "prisma studio"
   },
   "devDependencies": {

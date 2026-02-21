@@ -1,7 +1,7 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "@repo/db";
-import { openAPI, type Path } from "better-auth/plugins";
+import { openAPI } from "better-auth/plugins";
 
 export const auth = betterAuth({
   plugins: [openAPI()],
@@ -9,7 +9,7 @@ export const auth = betterAuth({
     provider: "postgresql",
   }),
   secret: process.env.BETTER_AUTH_SECRET!,
-  baseURL: process.env.BETTER_AUTH_URL!,
+  baseURL: process.env.BETTER_AUTH_BASE_URL!,
   emailAndPassword: {
     enabled: true,
   },
@@ -23,7 +23,7 @@ export const auth = betterAuth({
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     },
   },
-  trustedOrigins: [process.env.WEB_URL!],
+  trustedOrigins: [process.env.NEXT_PUBLIC_BETTER_AUTH_URL!],
 });
 
 export type Auth = typeof auth;
