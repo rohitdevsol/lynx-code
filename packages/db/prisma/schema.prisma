@@ -21,6 +21,7 @@ model User {
   image         String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  lastLoginAt   DateTime?
   
   githubId      String?
   githubUsername String?
@@ -31,7 +32,10 @@ model User {
 
   sessions      Session[]
   accounts      Account[]
+
   projects      Project[]
+  chatSessions  ChatSession[]
+  aiGenerations  AiGeneration[]
 
 
   @@map("user")
@@ -90,22 +94,28 @@ model Project{
   id                String        @id        @default(uuid())
   name              String        @unique
   description       String
+  
+  userId            String
 
-  githubRepoUrl     String        @unique
-  githubRepoOwner   String
-  githubRepoName    String
+  githubRepoUrl     String?        @unique
+  githubRepoOwner   String?
+  githubRepoName    String?
   githubBranch      String        @default("main")
-  template          ProjectTemplate
+
+  template          String?
 
   visibility        Visiblity     @default(PRIVATE)
-
 
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
 
-  userId            String
-
   users             User          @relation(fields: [userId],references: [id], onDelete: Cascade)
+
+  chatSessions      ChatSession[]
+  fileChanges       FileChange[]
+  fileSnapshots     FileSnapshot[]
+  sanboxes          Sandbox[]
+  aiGenerations     AiGeneration[]
 
   @@index([name])
   @@map("project")
@@ -114,65 +124,155 @@ model Project{
 
 model ChatSession {
   id              String    @id @default(uuid())
+
   projectId       String    
   userId          String   
-  title           String?   // Auto-generated from first message
+
+  title           String?   
   messageCount    Int       @default(0) 
   totalTokensUsed Int       @default(0) 
+
   createdAt       DateTime  @default(now()) 
   updatedAt       DateTime  @updatedAt 
 
-  // Relations
   project         Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
   user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   messages        Message[]
   fileChanges     FileChange[]
   aiGenerations   AiGeneration[]
-
-  @@index([projectId])
-  @@index([userId])
-  @@index([updatedAt(sort: Desc)])
-  @@map("chat_sessions")
 }
 
 model Message {
   id          String      @id @default(uuid())
-  sessionId   String      @map("session_id")
+
+  chatSessionId   String
+
   role        MessageRole
   content     String      @db.Text
-  tokensUsed  Int?        @map("tokens_used")
-  model       String?     // 'claude-sonnet-4', 'gpt-4'
-  metadata    Json?       // { function_calls, images, etc. }
-  createdAt   DateTime    @default(now()) @map("created_at")
+  tokensUsed  Int?       
+  model       String?    
+  metadata    Json?      
+  createdAt   DateTime    @default(now()) 
 
-  // Relations
-  session     ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  chatSession ChatSession @relation(fields: [chatSessionId], references: [id], onDelete: Cascade)
+
   fileChanges FileChange[]
-
- 
 }
 
 
+model FileChange {
+  id              String    @id @default(uuid())
 
+  projectId       String
+  sessionId       String?
+  messageId       String?
+
+  changeType      ChangeType 
+  filePath        String
+  contentBefore   String?   @db.Text
+  contentAfter    String?   @db.Text
+  githubCommitSha String?
+  createdBy       ChangeCreatedBy
+  reason          String?
+  createdAt       DateTime  @default(now())
+
+  project         Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  chatSession     ChatSession? @relation(fields: [sessionId], references: [id], onDelete: SetNull)
+  message         Message? @relation(fields: [messageId], references: [id], onDelete: SetNull)
+}
+
+model FileSnapshot {
+  id             String   @id @default(uuid())
+
+  projectId      String   
+
+  filePath       String   
+  content        String   @db.Text
+  fileSizeBytes  Int?     
+  lastModifiedAt DateTime @default(now()) 
+  lastModifiedBy String?  
+  githubSha      String?  @db.VarChar(40)
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+
+model AiGeneration {
+  id           String           @id @default(uuid())
+
+  userId       String           
+  projectId    String?          
+  chatSessionId    String?      
+
+  prompt       String           @db.Text
+  model        String
+  tokensInput  Int?           
+  tokensOutput Int?            
+  costUsd      Int?    
+  durationMs   Int?            
+  status       GenerationStatus
+  errorMessage String?          @db.Text
+  createdAt    DateTime         @default(now())
+
+  user    User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project Project?     @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  chatSession ChatSession? @relation(fields: [chatSessionId], references: [id], onDelete: SetNull)
+
+}
+
+model Sandbox {
+  id            String        @id @default(uuid())
+
+  projectId     String
+
+  e2bSandboxId  String        @unique
+  previewUrl    String?
+  status        SandboxStatus
+  template      String?
+  metadata      Json?
+  createdAt     DateTime      @default(now())
+  lastActiveAt  DateTime      @default(now())
+  expiresAt     DateTime?
+
+  project       Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+enum SandboxStatus {
+  CREATED
+  ACTIVE
+  INACTIVE
+}
+
+enum GenerationStatus {
+  SUCCESS
+  FAILURE
+  RATE_LIMIT
+}
+
+
+enum ChangeType {
+  CREATE
+  MODIFY
+  DELETE
+}
 
 enum MessageRole {
-  user
-  assistant
-  system
+  USER
+  ASSISTANT
+  SYSTEM
 }
 
+enum ChangeCreatedBy {
+  AI
+  USER
+}
 enum SubscriptionTier {
   FREE
   PRO
   ENTERPRISE
 }
 
-enum ProjectTemplate {
-  NEXTJS
-  REACT
-  VUE
-  BLANK
-}
 
 enum Visiblity {
   PRIVATE
