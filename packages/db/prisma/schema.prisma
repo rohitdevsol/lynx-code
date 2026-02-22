@@ -98,7 +98,7 @@ model Project{
   template          ProjectTemplate
 
   visibility        Visiblity     @default(PRIVATE)
-  
+
 
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
@@ -111,6 +111,55 @@ model Project{
   @@map("project")
 }
 
+
+model ChatSession {
+  id              String    @id @default(uuid())
+  projectId       String    
+  userId          String   
+  title           String?   // Auto-generated from first message
+  messageCount    Int       @default(0) 
+  totalTokensUsed Int       @default(0) 
+  createdAt       DateTime  @default(now()) 
+  updatedAt       DateTime  @updatedAt 
+
+  // Relations
+  project         Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages        Message[]
+  fileChanges     FileChange[]
+  aiGenerations   AiGeneration[]
+
+  @@index([projectId])
+  @@index([userId])
+  @@index([updatedAt(sort: Desc)])
+  @@map("chat_sessions")
+}
+
+model Message {
+  id          String      @id @default(uuid())
+  sessionId   String      @map("session_id")
+  role        MessageRole
+  content     String      @db.Text
+  tokensUsed  Int?        @map("tokens_used")
+  model       String?     // 'claude-sonnet-4', 'gpt-4'
+  metadata    Json?       // { function_calls, images, etc. }
+  createdAt   DateTime    @default(now()) @map("created_at")
+
+  // Relations
+  session     ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  fileChanges FileChange[]
+
+ 
+}
+
+
+
+
+enum MessageRole {
+  user
+  assistant
+  system
+}
 
 enum SubscriptionTier {
   FREE
