@@ -21,6 +21,14 @@ model User {
   image         String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  
+  githubId      String?
+  githubUsername String?
+  githubAccessToken String?
+  subscriptionTier SubscriptionTier @default(FREE)
+
+  creditsRemaining Int @default(10)
+
   sessions      Session[]
   accounts      Account[]
   projects      Project[]
@@ -79,16 +87,45 @@ model Verification {
 
 
 model Project{
-  id    String    @id      @default(uuid())
-  name  String    @unique
+  id                String        @id        @default(uuid())
+  name              String        @unique
+  description       String
 
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime    @updatedAt
+  githubRepoUrl     String        @unique
+  githubRepoOwner   String
+  githubRepoName    String
+  githubBranch      String        @default("main")
+  template          ProjectTemplate
 
-  userId    String
+  visibility        Visiblity     @default(PRIVATE)
+  
 
-  users    User   @relation(fields: [userId],references: [id], onDelete: Cascade)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  userId            String
+
+  users             User          @relation(fields: [userId],references: [id], onDelete: Cascade)
 
   @@index([name])
   @@map("project")
+}
+
+
+enum SubscriptionTier {
+  FREE
+  PRO
+  ENTERPRISE
+}
+
+enum ProjectTemplate {
+  NEXTJS
+  REACT
+  VUE
+  BLANK
+}
+
+enum Visiblity {
+  PRIVATE
+  PUBLIC
 }
