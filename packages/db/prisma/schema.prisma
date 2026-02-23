@@ -196,6 +196,8 @@ model FileSnapshot {
   githubSha           String?      @db.VarChar(40)
 
   project             Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, filePath])
 }
 
 
