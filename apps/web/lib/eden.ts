@@ -1,7 +1,7 @@
 import { treaty } from "@elysiajs/eden";
 import type { App } from "@server/index";
 
-export const api = treaty<App>(
+export const api: ReturnType<typeof treaty<App>> = treaty<App>(
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000",
 );
 
