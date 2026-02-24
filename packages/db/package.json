@@ -22,6 +22,7 @@
   "devDependencies": {
     "@types/bun": "latest",
     "@types/node": "^25.3.0",
+    "@repo/typescript-config": "*",
     "@types/pg": "^8.16.0",
     "prisma": "^7.4.1"
   },
