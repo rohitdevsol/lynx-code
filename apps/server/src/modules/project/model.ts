@@ -11,6 +11,26 @@ const PROJECT_ID_VALIDATION = {
   id: t.String({ format: "uuid" }),
 };
 
+const COMMON_PROJECT_DETAILS = {
+  description: t.Optional(t.String()),
+  template: t.Optional(
+    t.Union([
+      t.Literal("react"),
+      t.Literal("nextjs"),
+      t.Literal("vue"),
+      t.Literal("blank"),
+    ]),
+  ),
+};
+const PROJECT_UPDATE_BODY_VALIDATION = {
+  name: t.Optional(t.String({ minLength: 1, maxLength: 255 })),
+  ...COMMON_PROJECT_DETAILS,
+};
+const PROJECT_CREATE_BODY_VALIDATION = {
+  name: t.String({ minLength: 1, maxLength: 255 }),
+  ...COMMON_PROJECT_DETAILS,
+};
+
 const PAGINATION_VALIDATION = {
   page: t.Optional(t.Numeric({ minimum: 1, default: 1 })),
   pageSize: t.Optional(t.Numeric({ minimum: 1, maximum: 100, default: 10 })),
@@ -28,34 +48,12 @@ export const ProjectSchemas = {
   getProjectIdParam: t.Object(PROJECT_ID_VALIDATION),
 
   // Schema:: create a project by name
-  createProjectBody: t.Object({
-    name: t.String({ minLength: 1, maxLength: 255 }),
-    description: t.Optional(t.String()),
-    template: t.Optional(
-      t.Union([
-        t.Literal("react"),
-        t.Literal("nextjs"),
-        t.Literal("vue"),
-        t.Literal("blank"),
-      ]),
-    ),
-  }),
+  createProjectBody: t.Object(PROJECT_CREATE_BODY_VALIDATION),
 
   // Schema:: update the project name
   updateProjectName: t.Object(PROJECT_NAME_VALIDATION),
 
-  updateProject: t.Object({
-    name: t.Optional(t.String({ minLength: 1, maxLength: 255 })),
-    description: t.Optional(t.String()),
-    template: t.Optional(
-      t.Union([
-        t.Literal("react"),
-        t.Literal("nextjs"),
-        t.Literal("vue"),
-        t.Literal("blank"),
-      ]),
-    ),
-  }),
+  updateProject: t.Object(PROJECT_UPDATE_BODY_VALIDATION),
 
   // Schema:: update the project
   updateProjectNameParams: t.Object(PROJECT_ID_VALIDATION),

@@ -7,7 +7,6 @@ export const projectsRouter = new Elysia()
   .use(betterAuthPlugin)
   .guard({ auth: true, detail: { tags: ["Project"] } }, (app) =>
     app
-      // Handler:: to get all projects paginated
       .get(
         "/projects",
         async ({ user, query }) => {
