@@ -1,8 +1,8 @@
 import "dotenv/config";
 import Elysia from "elysia";
 import { cors } from "@elysiajs/cors";
-import { betterAuthPlugin } from "@/middlewares/auth";
-import { projectsRouter } from "@/modules/project";
+import { betterAuthPlugin } from "@server/middlewares/auth";
+import { projectsRouter } from "@server/modules/project";
 import { openapi, fromTypes } from "@elysiajs/openapi";
 import { BetterAuthOpenAPI } from "./utils/auth";
 

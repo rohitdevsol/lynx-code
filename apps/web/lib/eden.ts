@@ -1,7 +1,7 @@
 import { treaty } from "@elysiajs/eden";
-import type { LynxApi } from "@repo/common/types";
+import type { App } from "@server/index";
 
-export const api = treaty<LynxApi>(
+export const api = treaty<App>(
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000",
 );
 

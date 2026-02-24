@@ -1,6 +1,6 @@
 import Elysia from "elysia";
 import { ProjectSchemas } from "./model";
-import { betterAuthPlugin } from "@/middlewares/auth";
+import { betterAuthPlugin } from "@server/middlewares/auth";
 import { ProjectService } from "./service";
 
 export const projectsRouter = new Elysia()
