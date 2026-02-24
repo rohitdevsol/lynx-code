@@ -68,9 +68,6 @@
       ]
     },
     "db:generate": {
-      "dependsOn": [
-        "^generate"
-      ],
       "cache": false,
       "env": [
         "DATABASE_URL"

@@ -3,6 +3,9 @@
   "module": "index.ts",
   "type": "module",
   "private": true,
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "scripts": {
     "server:dev": "bun src/index.ts",
     "server:build": "bun build src/index.ts --outdir dist --target bun",

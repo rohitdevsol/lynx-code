@@ -5,7 +5,7 @@ export abstract class ProjectService {
   // Service:: to get all the projects
   static async getAllProjects(
     userId: string,
-    { page, pageSize }: ProjectModel["getProjectsRequestQuery"],
+    { page = 1, pageSize = 10 }: ProjectModel["getProjectsRequestQuery"],
   ) {
     const skip = (page - 1) * pageSize;
 
@@ -46,6 +46,8 @@ export abstract class ProjectService {
     const project = await prisma.project.create({
       data: {
         name: body.name,
+        description: body.description || "",
+        template: body.template,
         userId,
       },
     });
@@ -53,11 +55,11 @@ export abstract class ProjectService {
     return project;
   }
 
-  // Service:: to update the project via name
-  static async updateProjectByName(
+  // Service:: to update the project with different fields
+  static async updateProject(
     userId: string,
     params: ProjectModel["updateProjectNameParams"],
-    body: ProjectModel["updateProjectName"],
+    body: ProjectModel["updateProject"],
   ) {
     await prisma.project.update({
       where: {
@@ -66,6 +68,9 @@ export abstract class ProjectService {
       },
       data: {
         name: body.name,
+        description: body.description,
+        template: body.template,
+        updatedAt: new Date(),
       },
     });
   }

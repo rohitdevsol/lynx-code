@@ -9,7 +9,7 @@
     "db:migrate:dev": "dotenv -- turbo run db:migrate:dev",
     "db:push": "dotenv -- turbo run db:push",
     "db:seed": "dotenv -- turbo run db:seed",
-    "db:generate": "dotenv -- turbo run generate",
+    "db:generate": "dotenv -- turbo run db:generate",
     "db:migrate:reset": "dotenv -- turbo run db:migrate:reset",
     "db:studio": "dotenv -- turbo run db:studio",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",

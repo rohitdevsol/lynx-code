@@ -44,11 +44,7 @@ export const projectsRouter = new Elysia()
       .patch(
         "/project/:id",
         async ({ params, user, body }) => {
-          return await ProjectService.updateProjectByName(
-            user.id,
-            params,
-            body,
-          );
+          return await ProjectService.updateProject(user.id, params, body);
         },
         {
           params: ProjectSchemas.updateProjectNameParams,
