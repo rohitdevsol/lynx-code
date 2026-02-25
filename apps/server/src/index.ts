@@ -9,7 +9,7 @@ import { BetterAuthOpenAPI } from "./utils/auth";
 const app = new Elysia()
   .use(
     cors({
-      origin: process.env.NEXT_PUBLIC_BETTER_AUTH_URL!,
+      origin: process.env.NEXT_PUBLIC_FRONTEND_URL!,
       methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
       credentials: true,
       allowedHeaders: ["Content-Type", "Authorization"],

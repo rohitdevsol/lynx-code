@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "dotenv -- turbo run dev",
+    "dev:all": "dotenv -- turbo run dev server:dev --parallel",
     "build": "dotenv -- turbo run build",
     "lint": "turbo run lint",
     "db:migrate:deploy": "dotenv -- turbo run db:migrate:deploy",

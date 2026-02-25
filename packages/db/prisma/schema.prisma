@@ -93,7 +93,7 @@ model Verification {
 model Project{
   id                String        @id        @default(uuid())
   name              String        @unique
-  description       String
+  description       String?
   
   userId            String
 

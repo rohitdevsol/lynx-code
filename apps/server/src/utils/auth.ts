@@ -10,20 +10,13 @@ export const auth = betterAuth({
   }),
   secret: process.env.BETTER_AUTH_SECRET!,
   baseURL: process.env.BETTER_AUTH_BASE_URL!,
-  emailAndPassword: {
-    enabled: true,
-  },
   socialProviders: {
-    google: {
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    },
     github: {
       clientId: process.env.GITHUB_CLIENT_ID!,
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     },
   },
-  trustedOrigins: [process.env.NEXT_PUBLIC_BETTER_AUTH_URL!],
+  trustedOrigins: [process.env.NEXT_PUBLIC_FRONTEND_URL!],
 });
 
 export type Auth = typeof auth;
