@@ -10,32 +10,18 @@ import { Footer } from "../components/landing/Footer";
 export default function Home() {
   return (
     <div className="relative min-h-screen bg-black selection:bg-lynx-primary/30 selection:text-white">
-      {/* Background System handles noise, gradients, and cursor glowing */}
       <BackgroundSystem />
-
-      {/* Navigation */}
       <Navbar />
-
       <main className="flex flex-col relative z-10 w-full overflow-hidden">
-        {/* Core Sections */}
         <HeroSection />
-        
-        {/* Decorative Divider */}
         <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent my-10 max-w-7xl mx-auto" />
-        
         <FeaturesSection />
-        
         <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent my-10 max-w-7xl mx-auto" />
-        
         <HowItWorksSection />
-        
         <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent my-10 max-w-7xl mx-auto" />
-        
         <LiveDemoSection />
-        
         <TrustSection />
       </main>
-
       <Footer />
     </div>
   );
