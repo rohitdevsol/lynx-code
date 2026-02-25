@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { TerminalSquare, Github, Twitter, DiscIcon as Discord } from "lucide-react";
+import Image from "next/image";
 
 export const Footer = () => {
   return (
@@ -19,7 +20,7 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-2 mb-6 cursor-pointer">
-              <TerminalSquare className="w-8 h-8 text-lynx-primary" />
+              <Image src="/logo.svg" alt="Logo" width={60} height={40} />
               <span className="font-bold text-2xl tracking-tight text-white">
                 LynxCode
               </span>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageSquare, Cpu, Rocket } from "lucide-react";
+import Image from "next/image";
 
 const steps = [
   {
@@ -112,9 +113,9 @@ export const HowItWorksSection = () => {
                         {steps[0]!.codeSnippet}
                       </div>
                       <div className="flex items-center gap-3 text-zinc-500">
-                        <div className="w-8 h-8 rounded-full bg-lynx-primary/20 animate-pulse flex items-center justify-center border border-lynx-primary/30">
-                          <Cpu className="w-4 h-4 text-lynx-primary" />
-                        </div>
+                        {/* <div className="w-8 h-8 rounded-full bg-lynx-primary/20 animate-pulse flex items-center justify-center border border-lynx-primary/30"> */}
+                          <Image src="/logo.svg" alt="Logo" width={30} height={20} />
+                        {/* </div> */}
                         <span className="animate-pulse">Lynx is typing...</span>
                       </div>
                     </div>

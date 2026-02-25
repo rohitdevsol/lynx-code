@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, TerminalSquare } from "lucide-react";
 import { cn } from "../../lib/utils";
+import Image from "next/image";
+import Link from "next/link";
 
 const navLinks = [
   { name: "Product", href: "#product" },
@@ -34,13 +36,14 @@ export const Navbar = () => {
           "fixed top-0 inset-x-0 z-50 transition-all duration-300 border-b border-transparent",
           scrolled
             ? "bg-zinc-950/70 backdrop-blur-md border-white/10 shadow-lg py-4"
-            : "bg-transparent py-6"
+            : "bg-transparent py-6",
         )}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           <div className="flex items-center gap-2 group cursor-pointer">
-            <TerminalSquare className="w-6 h-6 text-lynx-primary group-hover:text-lynx-accent transition-colors duration-500" />
-            <span className="font-bold text-xl tracking-tight text-glow">
+            {/* <TerminalSquare className="w-6 h-6 text-lynx-primary group-hover:text-lynx-accent transition-colors duration-500" /> */}
+            <Image src="/logo.svg" alt="Logo" width={60} height={40} />
+            <span className="font-bold text-xl tracking-tight text-white">
               LynxCode
             </span>
           </div>
@@ -59,9 +62,13 @@ export const Navbar = () => {
           </div>
 
           <div className="hidden md:flex items-center gap-4">
-            <a href="#" className="text-sm font-medium text-zinc-300 hover:text-white transition-colors">
+            <Link
+             prefetch
+              href="/login"
+              className="text-sm font-medium text-zinc-300 hover:text-white transition-colors"
+            >
               Log in
-            </a>
+            </Link>
             <button className="px-5 py-2 rounded-md bg-white text-black text-sm font-medium hover:bg-zinc-200 transition-all shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] active:scale-95">
               Start Building
             </button>
@@ -116,7 +123,12 @@ export const Navbar = () => {
               </div>
 
               <div className="mt-auto flex flex-col gap-4">
-               <a href="#" className="text-center py-3 text-zinc-300 font-medium">Log in</a>
+                <a
+                  href="#"
+                  className="text-center py-3 text-zinc-300 font-medium"
+                >
+                  Log in
+                </a>
                 <button className="w-full py-3 rounded-md bg-white text-black font-medium text-lg">
                   Start Building
                 </button>

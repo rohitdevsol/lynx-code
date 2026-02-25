@@ -2,7 +2,7 @@ import { treaty } from "@elysiajs/eden";
 import type { App } from "@server/index";
 
 export const api: ReturnType<typeof treaty<App>> = treaty<App>(
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000",
+  process.env.NEXT_PUBLIC_BETTER_AUTH_BACKEND_URL || "http://localhost:4000",
 );
 
 export async function apiCall<T>(promise: Promise<{ data: T; error: any }>) {
