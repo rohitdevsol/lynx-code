@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, TerminalSquare } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "../../lib/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -56,14 +56,14 @@ export const Navbar = () => {
                 className="text-sm font-medium text-zinc-400 hover:text-white transition-colors relative group"
               >
                 {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-lynx-primary transition-all duration-300 group-hover:w-full" />
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-lynx-primary transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
           </div>
 
           <div className="hidden md:flex items-center gap-4">
             <Link
-             prefetch
+              prefetch
               href="/login"
               className="text-sm font-medium text-zinc-300 hover:text-white transition-colors"
             >
@@ -90,7 +90,7 @@ export const Navbar = () => {
             initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
             animate={{ opacity: 1, backdropFilter: "blur(12px)" }}
             exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            className="fixed inset-0 z-[100] bg-black/60 md:hidden"
+            className="fixed inset-0 z-100 bg-black/60 md:hidden"
           >
             <motion.div
               initial={{ x: "100%" }}
