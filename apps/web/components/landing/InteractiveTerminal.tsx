@@ -5,17 +5,26 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 const codeLines = [
   { type: "comment", content: "// Analyzing natural language prompt..." },
-  { type: "system", content: "> Generating Next.js components and Tailwind styles" },
+  {
+    type: "system",
+    content: "> Generating Next.js components and Tailwind styles",
+  },
   { type: "code", content: "export const LandingPage = () => {" },
   { type: "code", content: "  return (" },
-  { type: "code", content: "    <main className=\"bg-background text-foreground\">" },
-  { type: "diff-add", content: "+      <HeroSection animation=\"spring\" />" },
+  {
+    type: "code",
+    content: '    <main className="bg-background text-foreground">',
+  },
+  { type: "diff-add", content: '+      <HeroSection animation="spring" />' },
   { type: "diff-add", content: "+      <FeaturesGrid stagger={0.1} />" },
   { type: "code", content: "      <Footer />" },
   { type: "code", content: "    </main>" },
   { type: "code", content: "  );" },
   { type: "code", content: "};" },
-  { type: "success", content: "> ⚡ Build complete in 142ms. Ready for preview." },
+  {
+    type: "success",
+    content: "> ⚡ Build complete in 142ms. Ready for preview.",
+  },
 ];
 
 export const InteractiveTerminal = () => {
@@ -52,14 +61,18 @@ export const InteractiveTerminal = () => {
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
-    
+
     const streamCode = () => {
       setVisibleLines((prev) => {
         if (prev < codeLines.length) {
           const nextLine = codeLines[prev];
           if (!nextLine) return prev;
-          const delay = nextLine.type === "comment" || nextLine.type === "system" ? 800 :
-                        nextLine.type === "success" ? 1200 : 200;
+          const delay =
+            nextLine.type === "comment" || nextLine.type === "system"
+              ? 800
+              : nextLine.type === "success"
+                ? 1200
+                : 200;
           timeout = setTimeout(streamCode, delay);
           return prev + 1;
         }
@@ -67,7 +80,7 @@ export const InteractiveTerminal = () => {
       });
     };
 
-    timeout = setTimeout(streamCode, 500); // Initial delay
+    timeout = setTimeout(streamCode, 500);
 
     return () => clearTimeout(timeout);
   }, []);
@@ -91,14 +104,16 @@ export const InteractiveTerminal = () => {
           <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
           <div className="w-3 h-3 rounded-full bg-green-500/80" />
         </div>
-        <div className="text-xs font-mono text-zinc-400 select-none">lynx-ai-session ~ node</div>
+        <div className="text-xs font-mono text-zinc-400 select-none">
+          lynx-ai-session ~ node
+        </div>
         <div className="w-16" /> {/* Spacer */}
       </div>
 
       {/* Terminal Body */}
-      <div className="p-6 font-mono text-sm leading-relaxed overflow-hidden bg-black/40 min-h-[340px] relative">
+      <div className="p-6 font-mono text-sm leading-relaxed overflow-hidden bg-black/40 min-h-85 relative">
         {/* Dynamic Gradient shift on hover */}
-        <div className="absolute inset-0 bg-gradient-to-br from-lynx-primary/5 to-lynx-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 z-0 pointer-events-none" />
+        <div className="absolute inset-0 bg-linear-to-br from-lynx-primary/5 to-lynx-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 z-0 pointer-events-none" />
 
         <div className="relative z-10 flex flex-col gap-1">
           {codeLines.slice(0, visibleLines).map((line, idx) => (
@@ -116,14 +131,16 @@ export const InteractiveTerminal = () => {
               `}
             >
               <span className="opacity-40 mr-4 select-none inline-block w-4 text-right">
-                {line.type === "code" || line.type === "diff-add" ? idx + 1 : ""}
+                {line.type === "code" || line.type === "diff-add"
+                  ? idx + 1
+                  : ""}
               </span>
               {line.content}
             </motion.div>
           ))}
           {visibleLines < codeLines.length && (
-            <motion.div 
-              animate={{ opacity: [1, 0, 1] }} 
+            <motion.div
+              animate={{ opacity: [1, 0, 1] }}
               transition={{ repeat: Infinity, duration: 0.8 }}
               className="w-2.5 h-4 bg-zinc-300 ml-8 mt-1 inline-block"
             />

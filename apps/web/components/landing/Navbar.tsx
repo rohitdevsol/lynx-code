@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { cn } from "../../lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 const navLinks = [
   { name: "Product", href: "#product" },
@@ -41,7 +41,6 @@ export const Navbar = () => {
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           <div className="flex items-center gap-2 group cursor-pointer">
-            {/* <TerminalSquare className="w-6 h-6 text-lynx-primary group-hover:text-lynx-accent transition-colors duration-500" /> */}
             <Image src="/logo.svg" alt="Logo" width={60} height={40} />
             <span className="font-bold text-xl tracking-tight text-white">
               LynxCode
@@ -83,7 +82,6 @@ export const Navbar = () => {
         </div>
       </motion.nav>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
