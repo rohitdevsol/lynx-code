@@ -14,11 +14,11 @@ export default function Home() {
       <Navbar />
       <main className="flex flex-col relative z-10 w-full overflow-hidden">
         <HeroSection />
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent my-10 max-w-7xl mx-auto" />
+        <div className="w-full h-px bg-linear-to-r from-transparent via-white/10 to-transparent my-10 max-w-7xl mx-auto" />
         <FeaturesSection />
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent my-10 max-w-7xl mx-auto" />
+        <div className="w-full h-px bg-linear-to-r from-transparent via-white/10 to-transparent my-10 max-w-7xl mx-auto" />
         <HowItWorksSection />
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent my-10 max-w-7xl mx-auto" />
+        <div className="w-full h-px bg-linear-to-r from-transparent via-white/10 to-transparent my-10 max-w-7xl mx-auto" />
         <LiveDemoSection />
         <TrustSection />
       </main>

@@ -94,7 +94,7 @@ export default function LoginPage() {
         transition={{ type: "spring", stiffness: 100, damping: 20 }}
         className="relative z-10 w-full max-w-md"
       >
-        <div className="absolute -inset-[1px] bg-gradient-to-b from-lynx-primary/40 to-white/5 rounded-2xl blur-sm opacity-50" />
+        <div className="absolute -inset-px bg-linear-to-b from-lynx-primary/40 to-white/5 rounded-2xl blur-sm opacity-50" />
 
         <div className="relative glass-panel rounded-2xl p-10 flex flex-col items-center">
           <Image
@@ -109,7 +109,7 @@ export default function LoginPage() {
             <h1 className="text-3xl font-bold text-white mb-2 tracking-tight">
               Welcome back
             </h1>
-            <p className="text-zinc-400 text-sm max-w-[280px] mx-auto">
+            <p className="text-zinc-400 text-sm max-w-70 mx-auto">
               Sign in or create an account to start building at the speed of
               thought.
             </p>
