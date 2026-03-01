@@ -2,11 +2,10 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Github, TerminalSquare, ArrowLeft } from "lucide-react";
+import { Github, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export default function LoginPage() {
@@ -19,7 +18,7 @@ export default function LoginPage() {
         {
           provider: "github",
           scopes: ["repo", "read:user", "user:email"],
-          callbackURL: process.env.NEXT_PUBLIC_FRONTEND_URL!,
+          callbackURL: process.env.NEXT_PUBLIC_HOME_URL!,
         },
         {
           onSuccess: () => {
