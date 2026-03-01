@@ -3,6 +3,8 @@ import Elysia from "elysia";
 import { cors } from "@elysiajs/cors";
 import { betterAuthPlugin } from "@server/middlewares/auth";
 import { projectsRouter } from "@server/modules/project";
+import { aiRouter } from "@server/modules/ai";
+import { userRouter } from "@server/modules/user";
 import { openapi, fromTypes } from "@elysiajs/openapi";
 import { BetterAuthOpenAPI } from "./utils/auth";
 
@@ -50,6 +52,8 @@ const app = new Elysia()
   )
   .use(betterAuthPlugin)
   .use(projectsRouter)
+  .use(aiRouter)
+  .use(userRouter)
   .get("/health", () => ({ status: "ok" }))
   .listen(4000);
 
