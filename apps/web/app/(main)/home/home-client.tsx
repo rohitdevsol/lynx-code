@@ -3,10 +3,40 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getHomeDataQueryOptions } from "@/features/home/queries";
 import { motion } from "framer-motion";
-import { Search, Mic, ArrowUp } from "lucide-react";
+import { Search, Mic, ArrowUp, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useInitializeProjectFromPrompt } from "@/features/dashboard/mutations";
 
-export function HomeClient() {
+interface HomeClientProps {
+  realName?: string;
+}
+
+export function HomeClient({ realName }: HomeClientProps) {
   const { data } = useSuspenseQuery(getHomeDataQueryOptions());
+  const router = useRouter();
+  const [prompt, setPrompt] = useState("");
+  const initializeProject = useInitializeProjectFromPrompt();
+
+  const handleSubmit = async () => {
+    if (!prompt.trim() || initializeProject.isPending) return;
+    try {
+      const res = await initializeProject.mutateAsync({
+        name: "",
+        description: "",
+        template: "react",
+        prompt: prompt.trim()
+      });
+      const newProjectId = (res as any)?.project?.id || (res as any)?.id;
+      if (newProjectId) {
+        router.push(`/projects/${newProjectId}`);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const displayName = realName || "there";
 
   return (
     <div className="relative min-h-screen w-full flex flex-col items-center justify-center p-6 bg-black selection:bg-lynx-primary/30 selection:text-white">
@@ -26,18 +56,24 @@ export function HomeClient() {
 
       <div className="relative z-20 w-full max-w-3xl flex flex-col items-center flex-1 justify-center -mt-20">
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-8 tracking-tight text-center">
-          Ready to build, Rohit?
+          Ready to build, {displayName}?
         </h1>
 
         <div className="w-full relative group">
           <div className="absolute -inset-[2px] bg-gradient-to-r from-lynx-primary/50 to-lynx-accent/50 rounded-2xl blur-md opacity-0 group-hover:opacity-40 transition-opacity duration-300" />
           
-          <div className="relative flex items-center w-full bg-[#1a1a1f] border border-white/10 rounded-2xl p-2 shadow-2xl transition-all duration-300 group-hover:bg-[#222228] group-hover:border-white/20">
+          <div className={`relative flex items-center w-full bg-[#1a1a1f] border border-white/10 rounded-2xl p-2 shadow-2xl transition-all duration-300 ${initializeProject.isPending ? 'opacity-80' : 'group-hover:bg-[#222228] group-hover:border-white/20'}`}>
             <div className="flex-1 flex items-center pl-4 pr-2 py-3">
               <input 
                 type="text" 
-                placeholder="Ask Lovable to create a web app that..." 
-                className="w-full bg-transparent text-white placeholder-zinc-500 outline-none text-lg"
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') handleSubmit();
+                }}
+                disabled={initializeProject.isPending}
+                placeholder="Ask Lynx Code to create a web app that..." 
+                className="w-full bg-transparent text-white placeholder-zinc-500 outline-none text-lg disabled:opacity-50"
               />
             </div>
             
@@ -50,8 +86,12 @@ export function HomeClient() {
                 <Mic className="w-5 h-5" />
               </button>
               
-              <button className="p-2 bg-white text-black hover:bg-zinc-200 transition-colors rounded-xl">
-                <ArrowUp className="w-5 h-5" />
+              <button 
+                onClick={handleSubmit}
+                disabled={!prompt.trim() || initializeProject.isPending}
+                className="p-2 bg-white text-black hover:bg-zinc-200 transition-colors rounded-xl disabled:opacity-50"
+              >
+                {initializeProject.isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : <ArrowUp className="w-5 h-5" />}
               </button>
             </div>
           </div>

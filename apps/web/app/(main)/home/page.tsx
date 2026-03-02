@@ -1,23 +1,25 @@
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getQueryClient } from "@/lib/query-client";
-import { getHomeDataQueryOptions } from "@/features/home/queries";
+import { getHomeDataQueryOptions, getUserProfileQueryOptions } from "@/features/home/queries";
 import { HomeClient } from "./home-client";
-
-import { headers } from "next/headers";
+import { getSSRApiHeaders } from "@/lib/eden-ssr";
 
 export default async function HomePage() {
   const queryClient = getQueryClient();
-  const reqHeaders = await headers();
-  const cookieHeader = reqHeaders.get("cookie");
+  const headers = await getSSRApiHeaders();
 
   // Prefetch data on the server
-  await queryClient.prefetchQuery(
-    getHomeDataQueryOptions(cookieHeader ? { cookie: cookieHeader } : undefined)
-  );
+  await Promise.all([
+    queryClient.prefetchQuery(getHomeDataQueryOptions(headers)),
+    queryClient.prefetchQuery(getUserProfileQueryOptions(headers)),
+  ]);
+
+  const userProfile = queryClient.getQueryData<any>(getUserProfileQueryOptions(headers).queryKey);
+  const realName = userProfile?.profile?.name || "";
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <HomeClient />
+      <HomeClient realName={realName} />
     </HydrationBoundary>
   );
 }
