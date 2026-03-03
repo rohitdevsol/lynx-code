@@ -29,12 +29,12 @@ const items = [
   },
   {
     title: "Account",
-    url: "#",
+    url: "/account",
     icon: User,
   },
   {
     title: "Settings",
-    url: "#",
+    url: "/settings",
     icon: Settings,
   },
 ];
