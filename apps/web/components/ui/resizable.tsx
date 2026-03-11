@@ -2,13 +2,21 @@
 
 import { GripVerticalIcon } from "lucide-react"
 import * as ResizablePrimitive from "react-resizable-panels"
-
+import { ComponentProps } from "react"
 import { cn } from "@/lib/utils"
+
+// v4 of react-resizable-panels renamed exports:
+//   PanelGroup        → Group      (prop: direction → orientation)
+//   Panel             → Panel      (unchanged)
+//   PanelResizeHandle → Separator
+//
+// The direction/orientation rename means v4 uses ARIA `orientation` to set layout
+// direction, so aria-[orientation=vertical]:flex-col works correctly again.
 
 function ResizablePanelGroup({
   className,
   ...props
-}: ResizablePrimitive.GroupProps) {
+}: ComponentProps<typeof ResizablePrimitive.Group>) {
   return (
     <ResizablePrimitive.Group
       data-slot="resizable-panel-group"
@@ -21,7 +29,9 @@ function ResizablePanelGroup({
   )
 }
 
-function ResizablePanel({ ...props }: ResizablePrimitive.PanelProps) {
+function ResizablePanel({
+  ...props
+}: ComponentProps<typeof ResizablePrimitive.Panel>) {
   return <ResizablePrimitive.Panel data-slot="resizable-panel" {...props} />
 }
 
@@ -29,7 +39,7 @@ function ResizableHandle({
   withHandle,
   className,
   ...props
-}: ResizablePrimitive.SeparatorProps & {
+}: ComponentProps<typeof ResizablePrimitive.Separator> & {
   withHandle?: boolean
 }) {
   return (
