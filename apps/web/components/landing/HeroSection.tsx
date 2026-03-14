@@ -19,13 +19,13 @@ const textRevealVariants = {
 };
 
 export const HeroSection = () => {
-  const headline = ["Build", "at", "the", "speed", "of", "thought."];
+  const headline = ["ENGINEER", "AT", "THE", "SPEED", "OF", "THOUGHT"];
 
   return (
-    <section className="relative min-h-screen pt-32 pb-20 overflow-hidden flex items-center">
+    <section className="relative min-h-screen pt-40 pb-20 overflow-hidden flex items-center">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center z-10 w-full">
         <div className="flex flex-col gap-6 relative z-20">
-          <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white leading-[1.1]">
+          <h1 className="font-heading text-7xl md:text-8xl lg:text-[140px] leading-[0.85] text-white">
             {headline.map((word, i) => (
               <motion.span
                 key={i}
@@ -33,56 +33,48 @@ export const HeroSection = () => {
                 variants={textRevealVariants}
                 initial="hidden"
                 animate="visible"
-                className="inline-block mr-4 md:mr-5 lg:mr-6"
+                className="block"
                 style={{
                   color:
                     i === headline.length - 1 ? "var(--lynx-primary)" : "white",
                   textShadow:
                     i === headline.length - 1
-                      ? "0 0 30px rgba(139, 92, 246, 0.5)"
+                      ? "4px 4px 0px rgba(255,255,255,1)"
                       : "none",
                 }}
               >
                 {word}
               </motion.span>
             ))}
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: [0, 1, 0] }}
-              transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-              className="inline-block w-0.75 h-17.5 bg-lynx-accent ml-2 translate-y-2 shadow-[0_0_15px_rgba(34,211,238,0.8)]"
-            />
           </h1>
 
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.8 }}
-            className="text-xl md:text-2xl text-zinc-400 font-medium max-w-xl leading-relaxed"
+            className="border-l-4 border-lynx-primary pl-6 py-2 mt-4"
           >
-            The interface is observing you as you observe it. From prompt to
-            production, AI that writes real code.
-          </motion.p>
+            <p className="text-lg md:text-xl text-zinc-300 font-mono max-w-xl leading-relaxed uppercase tracking-wide">
+              // The interface observes you as you observe it.
+              <br/>
+              // Raw engineering power. AI that writes real code.
+            </p>
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.2, duration: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 mt-8"
+            className="flex flex-col sm:flex-row gap-6 mt-12"
           >
-            <button className="group relative px-8 py-4 rounded-lg bg-white text-black font-semibold text-lg overflow-hidden transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(255,255,255,0.4)] hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
-              <span className="relative z-10 flex items-center gap-2">
-                Start Building{" "}
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </span>
-              <div className="absolute inset-0 bg-linear-to-r from-lynx-primary/20 to-lynx-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <button className="px-10 py-5 bg-white text-black font-bold text-xl uppercase tracking-widest brutal-shadow flex items-center justify-center gap-3">
+              <span>COMMENCE</span>
+              <ArrowRight className="w-6 h-6" />
             </button>
 
-            <button className="group px-8 py-4 rounded-lg border border-white/10 bg-black/40 backdrop-blur-md text-white font-semibold text-lg hover:bg-white/5 transition-all flex items-center justify-center gap-3">
-              <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-lynx-primary transition-colors">
-                <Play className="w-4 h-4 text-white fill-white ml-0.5" />
-              </span>
-              View Demo
+            <button className="px-10 py-5 border-2 border-white bg-black text-white font-bold text-xl uppercase tracking-widest hover:bg-white hover:text-black transition-colors flex items-center justify-center gap-3 brutal-shadow">
+              <Play className="w-5 h-5 fill-current" />
+              <span>OVERRIDE DEMO</span>
             </button>
           </motion.div>
         </div>

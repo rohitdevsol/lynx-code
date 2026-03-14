@@ -38,24 +38,24 @@ export const HowItWorksSection = () => {
   return (
     <section
       id="how-it-works"
-      className="py-24 relative z-10 w-full max-w-7xl mx-auto px-6"
+      className="py-32 relative z-10 w-full max-w-7xl mx-auto px-6"
     >
-      <div className="text-center mb-16">
+      <div className="mb-16">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-4xl font-bold text-white mb-4"
+          className="font-heading text-6xl md:text-8xl tracking-wider text-white mb-4"
         >
-          How it works
+          EXECUTION_PROTOCOL
         </motion.h2>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-12 items-start">
-        <div className="w-full lg:w-1/3 flex flex-col relative">
-          <div className="absolute left-9.75 top-12 bottom-12 w-0.5 bg-white/10 hidden lg:block z-0">
+        <div className="w-full lg:w-1/3 flex flex-col relative border-l-2 border-zinc-800">
+          <div className="absolute -left-[2px] top-0 bottom-0 w-0.5 hidden lg:block z-0">
             <motion.div
-              className="w-full bg-linear-to-b from-lynx-primary to-lynx-accent"
+              className="w-full bg-lynx-primary"
               initial={{ height: "0%" }}
               animate={{
                 height: `${((activeStep - 1) / (steps.length - 1)) * 100}%`,
@@ -69,23 +69,22 @@ export const HowItWorksSection = () => {
             return (
               <div
                 key={step.id}
-                className={`relative pl-12 py-6 cursor-pointer transition-all duration-300 ${isActive ? "opacity-100" : "opacity-50 hover:opacity-80"}`}
+                className={`relative pl-8 py-6 cursor-pointer transition-all duration-300 ${isActive ? "opacity-100" : "opacity-40 hover:opacity-80"}`}
                 onClick={() => setActiveStep(step.id)}
               >
                 <div
-                  className={`absolute left-0 top-7 w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-500 z-10
-                   ${isActive ? "border-lynx-primary bg-lynx-primary/20 text-lynx-accent shadow-[0_0_15px_rgba(139,92,246,0.5)] scale-110" : "border-white/20 bg-black text-zinc-500"}
+                  className={`absolute -left-2 top-8 w-4 h-4 rounded-none transition-all duration-500 z-10
+                   ${isActive ? "bg-lynx-primary shadow-[0_0_15px_rgba(255,51,0,0.5)]" : "bg-zinc-800"}
                  `}
-                >
-                  {step.icon}
-                </div>
-                <div className="relative z-10 bg-black/40 backdrop-blur-sm p-4 -ml-4 rounded-xl border border-transparent hover:border-white/5 transition-colors">
+                />
+                
+                <div className={`relative z-10 p-4 transition-colors ${isActive ? "border-l-4 border-lynx-primary bg-white/5" : "border-l-4 border-transparent"}`}>
                   <h3
-                    className={`text-2xl font-semibold mb-2 transition-colors ${isActive ? "text-white" : "text-zinc-400"}`}
+                    className={`font-heading text-3xl mb-2 transition-colors uppercase tracking-widest ${isActive ? "text-white" : "text-zinc-500"}`}
                   >
                     {step.title}
                   </h3>
-                  <p className="text-zinc-400">{step.description}</p>
+                  <p className="font-mono text-sm text-zinc-400">{step.description}</p>
                 </div>
               </div>
             );
@@ -93,16 +92,19 @@ export const HowItWorksSection = () => {
         </div>
 
         <div className="w-full lg:w-2/3 h-100">
-          <div className="w-full h-full rounded-2xl border border-white/10 bg-black/50 backdrop-blur-xl relative overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-            <div className="h-12 border-b border-white/10 flex items-center px-4 bg-white/5">
+          <div className="w-full h-full border-2 border-zinc-800 bg-black relative">
+            <div className="h-10 border-b-2 border-zinc-800 flex items-center justify-between px-4 bg-zinc-900/50">
+              <div className="font-mono text-xs text-zinc-500 uppercase tracking-widest">
+                Term_v2.0
+              </div>
               <div className="flex gap-2">
-                <div className="w-3 h-3 rounded-full bg-white/20" />
-                <div className="w-3 h-3 rounded-full bg-white/20" />
-                <div className="w-3 h-3 rounded-full bg-white/20" />
+                <div className="w-3 h-3 bg-zinc-700" />
+                <div className="w-3 h-3 bg-zinc-700" />
+                <div className="w-3 h-3 bg-zinc-700" />
               </div>
             </div>
 
-            <div className="p-8 h-[calc(100%-3rem)] relative">
+            <div className="p-8 h-[calc(100%-2.5rem)] relative">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeStep}

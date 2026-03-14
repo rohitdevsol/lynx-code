@@ -26,3 +26,4 @@ export const getUserProfileQueryOptions = (headers?: Record<string, string>) =>
       return res;
     },
   });
+ 

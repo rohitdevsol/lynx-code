@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Bell, Shield, Key, Moon, Monitor, Eye, CreditCard } from "lucide-react";
+import { Bell, Shield, Key, Moon, Monitor, Eye, CreditCard, Copy } from "lucide-react";
+import { toast } from "sonner";
 import { useState } from "react";
 
 export function SettingsClient() {
@@ -15,61 +16,61 @@ export function SettingsClient() {
       </div>
 
       <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col flex-1">
-        <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-2">
-          Settings
+        <h1 className="text-4xl md:text-5xl font-heading text-white tracking-widest uppercase mb-2">
+          SYS_CONFIG
         </h1>
-        <p className="text-zinc-400 text-sm md:text-base mb-8">
-          Manage your account preferences and application settings.
+        <p className="text-lynx-primary font-mono text-sm mb-8 uppercase bg-lynx-primary/10 inline-block px-2 py-0.5 w-fit">
+          // Global system preferences and active tokens
         </p>
 
         <div className="flex flex-col md:flex-row gap-8">
-          <div className="w-full md:w-64 flex flex-col gap-2">
+          <div className="w-full md:w-64 flex flex-col gap-2 font-mono uppercase text-sm font-bold tracking-widest">
             <button 
               onClick={() => setActiveTab("general")}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+              className={`flex items-center gap-3 px-4 py-3 border-2 transition-all ${
                 activeTab === "general" 
-                  ? "bg-white/10 text-white font-medium border border-white/5 shadow-lg" 
-                  : "text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent"
+                  ? "bg-white text-black border-white brutal-shadow ml-2" 
+                  : "text-zinc-500 border-transparent hover:border-zinc-800 hover:text-white"
               }`}
             >
               <Monitor className="w-4 h-4" />
-              General
+              GENERAL
             </button>
             
             <button 
               onClick={() => setActiveTab("security")}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+              className={`flex items-center gap-3 px-4 py-3 border-2 transition-all ${
                 activeTab === "security" 
-                  ? "bg-white/10 text-white font-medium border border-white/5 shadow-lg" 
-                  : "text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent"
+                  ? "bg-white text-black border-white brutal-shadow ml-2" 
+                  : "text-zinc-500 border-transparent hover:border-zinc-800 hover:text-white"
               }`}
             >
               <Shield className="w-4 h-4" />
-              Security
+              SECURITY
             </button>
 
             <button 
               onClick={() => setActiveTab("billing")}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+              className={`flex items-center gap-3 px-4 py-3 border-2 transition-all ${
                 activeTab === "billing" 
-                  ? "bg-white/10 text-white font-medium border border-white/5 shadow-lg" 
-                  : "text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent"
+                  ? "bg-white text-black border-white brutal-shadow ml-2" 
+                  : "text-zinc-500 border-transparent hover:border-zinc-800 hover:text-white"
               }`}
             >
               <CreditCard className="w-4 h-4" />
-              Billing
+              BILLING
             </button>
 
             <button 
               onClick={() => setActiveTab("notifications")}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+              className={`flex items-center gap-3 px-4 py-3 border-2 transition-all ${
                 activeTab === "notifications" 
-                  ? "bg-white/10 text-white font-medium border border-white/5 shadow-lg" 
-                  : "text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent"
+                  ? "bg-white text-black border-white brutal-shadow ml-2" 
+                  : "text-zinc-500 border-transparent hover:border-zinc-800 hover:text-white"
               }`}
             >
               <Bell className="w-4 h-4" />
-              Notifications
+              NOTIFICATIONS
             </button>
           </div>
 
@@ -80,45 +81,45 @@ export function SettingsClient() {
                 animate={{ opacity: 1, y: 0 }}
                 className="flex flex-col gap-6"
               >
-                <div className="glass-panel rounded-2xl p-6">
-                  <h3 className="text-lg font-semibold text-white mb-6 border-b border-white/10 pb-4">Appearance</h3>
+                <div className="border-2 border-zinc-800 bg-black p-6">
+                  <h3 className="text-xl font-heading text-white mb-6 border-b-2 border-zinc-800 pb-4 tracking-widest uppercase">APPEARANCE</h3>
                   
-                  <div className="flex items-center justify-between p-4 bg-white/5 border border-white/10 rounded-xl">
+                  <div className="flex items-center justify-between p-4 border border-zinc-800 bg-zinc-950 mb-4">
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-zinc-900 border border-white/10 flex items-center justify-center text-lynx-primary">
+                      <div className="w-10 h-10 border border-zinc-700 bg-black flex items-center justify-center text-white">
                         <Moon className="w-5 h-5" />
                       </div>
                       <div>
-                        <h4 className="font-medium text-white">Theme Preference</h4>
-                        <p className="text-xs text-zinc-400">Choose how Lynx looks to you.</p>
+                        <h4 className="font-bold font-mono text-sm text-white uppercase">Theme Preference</h4>
+                        <p className="text-xs font-mono text-zinc-500 uppercase">// Default rendering mode</p>
                       </div>
                     </div>
                     
-                    <select className="bg-black border border-white/20 text-white text-sm rounded-lg outline-none px-3 py-2 cursor-pointer focus:border-lynx-primary">
-                      <option value="system">System Default</option>
-                      <option value="dark">Dark Mode</option>
-                      <option value="light">Light Mode</option>
+                    <select className="bg-black border-2 border-zinc-700 text-white font-mono text-xs uppercase px-3 py-2 cursor-pointer focus:border-lynx-primary focus:outline-none transition-colors">
+                      <option value="system">System</option>
+                      <option value="dark">Dark</option>
+                      <option value="light">Light</option>
                     </select>
                   </div>
                 </div>
 
-                <div className="glass-panel rounded-2xl p-6">
-                  <h3 className="text-lg font-semibold text-white mb-6 border-b border-white/10 pb-4">Accessibility</h3>
+                <div className="border-2 border-zinc-800 bg-black p-6">
+                  <h3 className="text-xl font-heading text-white mb-6 border-b-2 border-zinc-800 pb-4 tracking-widest uppercase">ACCESSIBILITY</h3>
                   
-                  <div className="flex items-center justify-between p-4 bg-white/5 border border-white/10 rounded-xl">
+                  <div className="flex items-center justify-between p-4 border border-zinc-800 bg-zinc-950">
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-zinc-900 border border-white/10 flex items-center justify-center text-lynx-accent">
+                      <div className="w-10 h-10 border border-zinc-700 bg-black flex items-center justify-center text-white">
                         <Eye className="w-5 h-5" />
                       </div>
                       <div>
-                        <h4 className="font-medium text-white">Reduce Motion</h4>
-                        <p className="text-xs text-zinc-400">Minimize animations across the dashboard.</p>
+                        <h4 className="font-bold font-mono text-sm text-white uppercase">Reduce Motion</h4>
+                        <p className="text-xs font-mono text-zinc-500 uppercase">// DISABLE UI KINETICS</p>
                       </div>
                     </div>
                     
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input type="checkbox" className="sr-only peer" />
-                      <div className="w-11 h-6 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-lynx-primary"></div>
+                      <div className="w-12 h-6 bg-zinc-800 border-2 border-zinc-700 peer-focus:outline-none peer-checked:bg-white peer-checked:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-zinc-400 peer-checked:after:bg-black after:border-none after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-6"></div>
                     </label>
                   </div>
                 </div>
@@ -131,27 +132,39 @@ export function SettingsClient() {
                 animate={{ opacity: 1, y: 0 }}
                 className="flex flex-col gap-6"
               >
-                <div className="glass-panel rounded-2xl p-6">
-                  <h3 className="text-lg font-semibold text-white mb-6 border-b border-white/10 pb-4">API Keys</h3>
+                <div className="border-2 border-zinc-800 bg-black p-6">
+                  <h3 className="text-xl font-heading text-white mb-6 border-b-2 border-zinc-800 pb-4 tracking-widest uppercase">API_TOKENS</h3>
                   
-                  <div className="flex items-center justify-between p-4 bg-white/5 border border-white/10 rounded-xl mb-4">
+                  <div className="flex items-center justify-between p-4 border border-zinc-800 bg-zinc-950 mb-4">
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-zinc-900 border border-white/10 flex items-center justify-center text-white">
+                      <div className="w-10 h-10 border border-zinc-700 bg-black flex items-center justify-center text-white">
                         <Key className="w-5 h-5" />
                       </div>
                       <div>
-                        <h4 className="font-medium text-white text-sm">Default Project Key</h4>
-                        <p className="text-xs text-zinc-500 font-mono mt-1">lyk_192837...asdf98</p>
+                        <h4 className="font-bold font-mono text-sm text-white uppercase">Root Authority Key</h4>
+                        <div className="flex items-center gap-2 mt-1">
+                          <p className="text-xs text-lynx-primary font-mono tracking-widest">LYK_192837...ASDF98</p>
+                          <button 
+                            onClick={() => {
+                              navigator.clipboard.writeText("LYK_192837...ASDF98");
+                              toast.success("Token copied to clipboard");
+                            }}
+                            className="text-zinc-500 hover:text-lynx-primary transition-colors p-1"
+                            title="Copy Token"
+                          >
+                            <Copy className="w-4 h-4" />
+                          </button>
+                        </div>
                       </div>
                     </div>
                     
-                    <button className="text-xs font-medium bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg transition-colors">
-                      Revoke
+                    <button className="relative text-xs font-bold font-mono uppercase tracking-widest bg-red-600 hover:bg-white text-white hover:text-black border-2 border-red-600 hover:border-white px-4 py-2 transition-colors after:content-[''] after:absolute after:-m-3 after:inset-0 brutal-shadow-sm">
+                      REVOKE
                     </button>
                   </div>
 
-                  <button className="w-full py-3 rounded-xl border border-dashed border-white/20 text-zinc-400 font-medium hover:border-white/40 hover:text-white transition-colors text-sm">
-                    + Generate New Key
+                  <button className="w-full py-4 border-2 border-dashed border-zinc-700 text-zinc-400 font-bold font-mono uppercase tracking-widest hover:border-white hover:text-white transition-colors text-sm">
+                    + GENERATE NEW TOKEN
                   </button>
                 </div>
               </motion.div>
@@ -161,9 +174,9 @@ export function SettingsClient() {
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex flex-col items-center justify-center p-12 glass-panel rounded-2xl text-center"
+                className="flex flex-col items-center justify-center p-12 border-2 border-zinc-800 bg-black text-center"
               >
-                <p className="text-zinc-500 font-medium">Coming soon.</p>
+                <p className="text-zinc-500 font-mono font-bold uppercase tracking-widest">// MODULE_OFFLINE</p>
               </motion.div>
             )}
           </div>

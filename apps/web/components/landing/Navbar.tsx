@@ -33,17 +33,16 @@ export const Navbar = () => {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         className={cn(
-          "fixed top-0 inset-x-0 z-50 transition-all duration-300 border-b border-transparent",
+          "fixed top-0 inset-x-0 z-50 transition-all duration-300 border-b-2",
           scrolled
-            ? "bg-zinc-950/70 backdrop-blur-md border-white/10 shadow-lg py-4"
-            : "bg-transparent py-6",
+            ? "bg-black border-white py-4"
+            : "bg-transparent border-transparent py-6",
         )}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           <div className="flex items-center gap-2 group cursor-pointer">
-            <Image src="/logo.svg" alt="Logo" width={60} height={40} />
-            <span className="font-bold text-xl tracking-tight text-white">
-              LynxCode
+            <span className="font-heading font-bold text-3xl tracking-wide text-white">
+              LYNXCODE
             </span>
           </div>
 
@@ -64,12 +63,12 @@ export const Navbar = () => {
             <Link
               prefetch
               href="/login"
-              className="text-sm font-medium text-zinc-300 hover:text-white transition-colors"
+              className="text-sm font-bold uppercase text-zinc-300 hover:text-white transition-colors tracking-wider"
             >
-              Log in
+              LOG IN
             </Link>
-            <button className="px-5 py-2 rounded-md bg-white text-black text-sm font-medium hover:bg-zinc-200 transition-all shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] active:scale-95">
-              Start Building
+            <button className="px-5 py-2 bg-white text-black font-bold uppercase tracking-wider brutal-shadow hover:bg-zinc-200">
+              BUILD NOW
             </button>
           </div>
 

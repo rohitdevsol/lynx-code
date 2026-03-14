@@ -7,8 +7,10 @@ import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter()
   const [isSigniningIn, setIsSigniningIn] = useState(false);
 
   const handleGitHubLogin = async () => {
@@ -18,11 +20,12 @@ export default function LoginPage() {
         {
           provider: "github",
           scopes: ["repo", "read:user", "user:email"],
-          callbackURL: process.env.NEXT_PUBLIC_HOME_URL!,
+          // callbackURL: process.env.NEXT_PUBLIC_HOME_URL!,
         },
         {
           onSuccess: () => {
             setIsSigniningIn(false);
+            // router.push("/home");
           },
           onError: () => {
             toast.error("Login failed");

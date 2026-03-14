@@ -48,12 +48,25 @@ export function TerminalComponent({
     fitAddon.fit();
 
     term.writeln('\x1b[38;2;34;211;238m[LynxCode OS]\x1b[0m Starting E2B WebContainer Sandbox...');
-    term.writeln('\x1b[2mProvisioning secure micro-VM...\x1b[0m');
-    if (projectId) term.writeln(`\x1b[35mProject ID:\x1b[0m \x1b[2m${projectId}\x1b[0m`);
-    if (previewUrl) {
-      term.writeln('\x1b[32mDev Server Started: \x1b[0m \x1b[4m' + previewUrl + '\x1b[0m');
-    }
-    term.writeln('');
+    
+    // Artificial delays for perceived performance (Doherty Threshold)
+    setTimeout(() => {
+      if (!xtermRef.current) return;
+      term.writeln('\x1b[2mProvisioning secure micro-VM...\x1b[0m');
+      
+      setTimeout(() => {
+        if (!xtermRef.current) return;
+        if (projectId) term.writeln(`\x1b[35mProject ID:\x1b[0m \x1b[2m${projectId}\x1b[0m`);
+        
+        setTimeout(() => {
+          if (!xtermRef.current) return;
+          if (previewUrl) {
+            term.writeln('\x1b[32mDev Server Started: \x1b[0m \x1b[4m' + previewUrl + '\x1b[0m');
+          }
+          term.writeln('');
+        }, 300);
+      }, 400);
+    }, 600);
 
     let commandBuffer = "";
 

@@ -2,7 +2,7 @@
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getHomeDataQueryOptions } from "@/features/home/queries";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 import { Search, Mic, ArrowUp, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
